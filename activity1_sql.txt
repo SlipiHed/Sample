@@ -1,0 +1,307 @@
+CREATE DATABASE NORTHWIND;
+
+USE NORTHWIND;
+
+CREATE TABLE Categories (
+	Category_ID INT PRIMARY KEY,
+	Category_NAME VARCHAR(50),
+	Description_text VARCHAR(100),
+	Picture VARBINARY(MAX)
+);
+
+CREATE TABLE Customers (
+    Customer_ID VARCHAR(50) PRIMARY KEY,
+    Company_Name VARCHAR(100),
+    Contact_Name VARCHAR(100),
+    Contact_Title VARCHAR(50),
+    Address_text VARCHAR(150),
+    City VARCHAR(50),
+    Region VARCHAR(50),
+    Postal_Code VARCHAR(50),
+    Country VARCHAR(50),
+    Phone VARCHAR(50),
+    Fax VARCHAR(50)
+);
+
+CREATE TABLE Employees (
+    Employee_ID INT PRIMARY KEY,
+    Last_Name VARCHAR(50),
+    first_Name VARCHAR(50),
+    Title VARCHAR(50),
+    TitleOfCourtesy VARCHAR(50),
+    Birth_Date VARCHAR(50),
+    Hire_Date VARCHAR(50),
+    Address_text VARCHAR(50),
+    City VARCHAR(50),
+    Region VARCHAR(50),
+    Postal_Code VARCHAR(50),
+    Country VARCHAR(50),
+    Home_Phone VARCHAR(50),
+    Extension INT,
+    Picture VARBINARY(MAX),
+    Notes VARCHAR(MAX),
+    Reports_To VARCHAR(50),
+);
+
+CREATE TABLE Order_Details (
+    Order_ID INT,
+    Order_Product VARCHAR(50),
+    Unit_Price MONEY,
+    Quantity INT,
+    Discount FLOAT
+);
+
+CREATE TABLE Orders (
+    Order_ID INT PRIMARY KEY,
+    Customer_ID VARCHAR(50),
+    EmployeeID INT,
+    OrderDate VARCHAR(50),
+    RequiredDate VARCHAR(50),
+    ShippedDate VARCHAR(50),
+    ShipVia INT,
+    Freight MONEY,
+    ShipName VARCHAR(50),
+    ShipAddress VARCHAR(50),
+    ShipCity VARCHAR(50),
+    ShipRegion VARCHAR(50),
+    ShipPostalCode VARCHAR(50),
+    ShipCountry VARCHAR(50)
+);
+
+CREATE TABLE Products (
+    ProductID INT PRIMARY KEY,
+    ProductName VARCHAR(50),
+    SupplierID INT,
+    CategoryID INT,
+    QuantityPerUnit VARCHAR(50),
+    UnitPrice MONEY,
+    UnitsInStock INT,
+    UnitsOnOrder INT,
+    ReorderLevel INT,
+    Discontinued BIT
+);
+
+CREATE TABLE Shippers (
+    ShipperID INT PRIMARY KEY,
+    CompanyName VARCHAR(50),
+    Phone VARCHAR(50)
+);
+
+CREATE TABLE SUPPLIERS (
+    SupplierID INT PRIMARY KEY,
+    CompanyName VARCHAR(50),
+    ContactName VARCHAR(50),
+    ContactTitle VARCHAR(50),
+    Suppliers_Address VARCHAR(100),
+    City VARCHAR(50),
+    Region VARCHAR(50),
+    PostalCode VARCHAR(50),
+    Country VARCHAR(50),
+    Phone VARCHAR(50),
+    Fax VARCHAR(50),
+    HomePage VARCHAR(2083),
+);
+
+INSERT INTO Categories (Category_ID, Category_NAME, Description_text, Picture)
+VALUES
+(1, 'Beverages', 'Soft drinks, coffees, teas, beers, and ales', NULL),
+(2, 'Condiments', 'Sweet and savory sauces, relishes, spreads, and seasonings', NULL),
+(3, 'Confections', 'Desserts, candies, and sweet breads', NULL);
+
+SELECT TOP (1000) [Category_ID]
+      ,[Category_NAME]
+      ,[Description_text]
+      ,[Picture]
+  FROM [NORTHWIND].[dbo].[Categories]
+
+INSERT INTO Customers (
+    Customer_ID, Company_Name, Contact_Name, Contact_Title,
+    Address_text, City, Region, Postal_Code, Country,
+    Phone, Fax
+)
+VALUES
+('ALFKI', 'Alfreds Futterkiste', 'Maria Anders', 'Sales Representative',
+ 'Obere Str. 57', 'Berlin', NULL, '12209', 'Germany',
+ '030-0074321', '030-0076545'),
+
+('ANATR', 'Ana Trujillo Emparedados y helados', 'Ana Trujillo', 'Owner',
+ 'Avda. de la Constitución 2222', 'México D.F.', NULL, '05021', 'Mexico',
+ '(5) 555-4729', '(5) 555-3745'),
+
+('ANTON', 'Antonio Moreno Taquería', 'Antonio Moreno', 'Owner',
+ 'Mataderos 2312', 'México D.F.', NULL, '05023', 'Mexico',
+ '(5) 555-3932', NULL);
+
+SELECT TOP (1000)
+    [Customer_ID],
+    [Company_Name],
+    [Contact_Name],
+    [Contact_Title],
+    [Address_text],
+    [City],
+    [Region],
+    [Postal_Code],
+    [Country],
+    [Phone],
+    [Fax]
+FROM [NORTHWIND].[dbo].[Customers];
+
+INSERT INTO Employees (
+    Employee_ID, Last_Name, First_Name, Title, TitleOfCourtesy,
+    Birth_Date, Hire_Date, Address_text, City, Region,
+    Postal_Code, Country, Home_Phone, Extension, Picture,
+    Notes, Reports_To
+)
+VALUES
+(1, 'Davolio', 'Nancy', 'Sales Representative', 'Ms.',
+ '1948-12-08', '1992-05-01', '507 - 20th Ave. E. Apt. 2A', 'Seattle', 'WA',
+ '98122', 'USA', '(206) 555-9857', 5467, NULL,
+ 'Education includes a BA in psychology from Colorado State University in 1970. She also completed "The Art of the Cold Call." Nancy is a member of Toastmasters International.', 'Fuller, Andrew'),
+
+(2, 'Fuller', 'Andrew', 'Vice President, Sales', 'Dr.',
+ '1952-02-19', '1992-08-14', '908 W. Capital Way', 'Tacoma', 'WA',
+ '98401', 'USA', '(206) 555-9482', 3457, NULL,
+ 'Andrew received his BTS commercial in 1974 and a Ph.D. in international marketing from the University of Dallas in 1981. He is fluent in French and Italian and reads German.', NULL),
+
+(3, 'Leverling', 'Janet', 'Sales Representative', 'Ms.',
+ '1963-08-30', '1992-04-01', '722 Moss Bay Blvd.', 'Kirkland', 'WA',
+ '98033', 'USA', '(206) 555-3412', 3355, NULL,
+ 'Janet has a BS degree in chemistry from Boston College (1984). She has also completed a certificate program in food retailing management.', 'Fuller, Andrew');
+
+SELECT TOP (1000)
+    [Employee_ID],
+    [Last_Name],
+    [First_Name],
+    [Title],
+    [TitleOfCourtesy],
+    [Birth_Date],
+    [Hire_Date],
+    [Address_text],
+    [City],
+    [Region],
+    [Postal_Code],
+    [Country],
+    [Home_Phone],
+    [Extension],
+    [Picture],
+    [Notes],
+    [Reports_To]
+FROM [NORTHWIND].[dbo].[Employees];
+
+INSERT INTO Order_Details (
+    Order_ID, Order_Product, Unit_Price, Quantity, Discount
+)
+VALUES
+(10248, '11', 14.00, 12, 0.00),
+(10248, '42', 9.80, 10, 0.00),
+(10248, '72', 34.80, 5, 0.00);
+
+SELECT TOP (1000)
+    [Order_ID],
+    [Order_Product],
+    [Unit_Price],
+    [Quantity],
+    [Discount]
+FROM [NORTHWIND].[dbo].[Order_Details];
+
+INSERT INTO Orders (
+    Order_ID, Customer_ID, EmployeeID, OrderDate, RequiredDate,
+    ShippedDate, ShipVia, Freight, ShipName, ShipAddress,
+    ShipCity, ShipRegion, ShipPostalCode, ShipCountry
+)
+VALUES
+(10248, 'VINET', 1, '1994-08-04', '1994-09-01', '1994-08-16', 3, 32.38,
+ 'Vins et alcools Chevalier', '59 rue de l''Abbaye', 'Reims', NULL, '51100', 'France'),
+
+(10249, 'TOMSP', 2, '1994-08-05', '1994-09-16', '1994-08-10', 1, 11.61,
+ 'Toms Spezialitäten', 'Luisenstr. 48', 'Münster', NULL, '44087', 'Germany'),
+
+(10250, 'HANAR', 3, '1994-08-08', '1994-09-05', '1994-08-12', 2, 65.83,
+ 'Hanari Carnes', 'Rua do Paço, 67', 'Rio de Janeiro', 'RJ', '05454-876', 'Brazil');
+
+SELECT TOP (1000)
+    [Order_ID],
+    [Customer_ID],
+    [EmployeeID],
+    [OrderDate],
+    [RequiredDate],
+    [ShippedDate],
+    [ShipVia],
+    [Freight],
+    [ShipName],
+    [ShipAddress],
+    [ShipCity],
+    [ShipRegion],
+    [ShipPostalCode],
+    [ShipCountry]
+FROM [NORTHWIND].[dbo].[Orders];
+
+INSERT INTO Products (
+    ProductID, ProductName, SupplierID, CategoryID,
+    QuantityPerUnit, UnitPrice, UnitsInStock,
+    UnitsOnOrder, ReorderLevel, Discontinued
+)
+VALUES
+(1, 'Chai', 1, 1, '10 boxes x 20 bags', 18.00, 39, 0, 10, 0),
+(2, 'Chang', 1, 1, '24 - 12 oz bottles', 19.00, 17, 40, 25, 0),
+(3, 'Aniseed Syrup', 1, 2, '12 - 550 ml bottles', 10.00, 13, 70, 25, 0);
+
+SELECT TOP (1000)
+    [ProductID],
+    [ProductName],
+    [SupplierID],
+    [CategoryID],
+    [QuantityPerUnit],
+    [UnitPrice],
+    [UnitsInStock],
+    [UnitsOnOrder],
+    [ReorderLevel],
+    [Discontinued]
+FROM [NORTHWIND].[dbo].[Products];
+
+INSERT INTO Shippers (
+    ShipperID, CompanyName, Phone
+)
+VALUES
+(1, 'Speedy Express', '(503) 555-9831'),
+(2, 'United Package', '(503) 555-3199'),
+(3, 'Federal Shipping', '(503) 555-9931');
+
+SELECT TOP (1000)
+    [ShipperID],
+    [CompanyName],
+    [Phone]
+FROM [NORTHWIND].[dbo].[Shippers];
+
+INSERT INTO Suppliers (
+    SupplierID, CompanyName, ContactName, ContactTitle,
+    Suppliers_Address, City, Region, PostalCode, Country,
+    Phone, Fax, HomePage
+)
+VALUES
+(1, 'Exotic Liquids', NULL, NULL,
+ NULL, NULL, NULL, 'EC1 4SD', 'UK',
+ '(171) 555-2222', NULL, NULL),
+
+(2, 'New Orleans Cajun Delights', NULL, NULL,
+ NULL, 'New Orleans', 'LA', '70117', 'USA',
+ '(100) 555-4822', NULL, '#CAJUN.HTM#'),
+
+(3, 'Grandma Kelly''s Homestead', NULL, NULL,
+ NULL, 'Ann Arbor', 'MI', '48104', 'USA',
+ '(313) 555-5735', '(313) 555-3349', NULL);
+
+SELECT TOP (1000)
+    [SupplierID],
+    [CompanyName],
+    [ContactName],
+    [ContactTitle],
+    [Suppliers_Address],
+    [City],
+    [Region],
+    [PostalCode],
+    [Country],
+    [Phone],
+    [Fax],
+    [HomePage]
+FROM [NORTHWIND].[dbo].[Suppliers];
